@@ -38,6 +38,7 @@ return new class extends Migration
             $table->string("main_category");
             $table->longText("image_url");
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }
