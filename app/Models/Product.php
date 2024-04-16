@@ -11,6 +11,10 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $primaryKey = 'code';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
         "code",
         "status",
