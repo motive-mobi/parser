@@ -35,7 +35,6 @@ class FileProcessService {
         });
 
         foreach ($filtered_files as $file) {
-            //return $file;
             $lines = gzfile(Storage::disk('public')->path($file));
             $counter = 0;
             $now = Carbon::now();

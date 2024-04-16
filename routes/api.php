@@ -3,11 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Middleware\VerifyApiAccessKey;
+
 use App\Http\Controllers\API\FileProcessController;
 use App\Http\Controllers\API\ProductsController;
 use App\Http\Controllers\API\ApiResourcesController;
 
-//Route::middleware('auth:sanctum')->group(function () {
+Route::middleware([VerifyApiAccessKey::class])->group(function () {
     Route::group(['prefix' => 'v1'], function () {
 
         // Detalhes da API, se conexão leitura e escritura com a base de dados está OK, horário da última vez que o CRON foi executado, tempo online e uso de memória.
@@ -29,4 +31,4 @@ use App\Http\Controllers\API\ApiResourcesController;
         });
 
     });
-//});
+});

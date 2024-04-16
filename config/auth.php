@@ -112,4 +112,15 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Api Access Key
+    |--------------------------------------------------------------------------
+    |
+    | Access key for accessing the API resources.
+    |
+    */
+
+    'api_access_key' => env('API_ACCESS_KEY'),
+
 ];
