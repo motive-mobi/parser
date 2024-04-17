@@ -1,66 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Backend Challenge 20230105
 
-## About Laravel
+REST API para utilizar os dados do projeto Open Food Facts
+ - Backend: Laravel versão 11.0
+ - SGBD: MySQL versão 8.3.0
+ - NodeJS: 18.17.1
+ - npm: 9.6.7
+ - docker versão 26.0.1
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Autor
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Alexandre Tucunduva | [@motive-mobi](https://www.github.com/motive-mobi)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## 🔗 Links
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alexandre-tucunduva)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Referências
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- [Docker](https://www.docker.com/get-started/)
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Deploy
 
-### Premium Partners
+Comandos utilizados no deploy deste projeto:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 1. Básico:
 
-## Contributing
+Clonando o repositório:
+```bash
+git clone git@github.com:motive-mobi/parser.git
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Instalação das dependências do backend (ambiente *nix):
+```bash
+cd parser
+cp .env.example .env
+composer install
+```
+Editar as seguintes seções do arquivo .env para apontar corretamente o banco de dados criado no docker e setar a chave da API:
+```bash
+DB_CONNECTION=mysql
+DB_HOST=meu_host
+DB_PORT=3306
+DB_DATABASE=minha_database
+DB_USERNAME=meu_usuario
+DB_PASSWORD=minha_senha
+...
+API_ACCESS_KEY="my_super_secret_key"
+```
+Dica para gerar a chave de acesso  a API (Copie e cole o resultado gerado na seção API_ACCESS_KEY do .env):
+```bash
+php artisan tinker
+\Str::random(64)
+```
 
-## Code of Conduct
+Gerar a chave da aplicação:
+```bash
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Migração das tabelas do banco de dados:
+```bash
+php artisan migrate
+```
 
-## Security Vulnerabilities
+Iniciando a aplicação localmente:
+```bash
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Após o deploy, os endpoints podem ser acessados via postman (ou similar) em:
+http://localhost:8000/api/v1/
 
-## License
+## 2. Docker (selecionar mysql como service):
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Obs.: Alterar a variável DB_HOST do arquivo .env com o valor mysql
+```bash
+php artisan sail:install
+./vendor/bin/sail up
+./vendor/bin/sail artisan migrate
+```
+Após o deploy via docker, os endpoints podem ser acessados via postman (ou similar) em:
+http://localhost/api/v1/
+
+Configuração do Postman:
+
+Adicionar o parâmetro x-api-key como chave e a chave de acesso gerada como valor, nas configurações de HEADERS
